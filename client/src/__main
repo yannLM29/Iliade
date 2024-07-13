@@ -1,0 +1,108 @@
+#include <iostream>
+#include <iomanip>
+#include <cstring>
+
+#include "core/IliadeEngine.hpp"
+#include "core/GameComponent.hpp"
+#include "core/GameScene.hpp"
+#include "core/GameAsset.hpp"
+#include "graphics/sfml/SfmlIliadeGraphics.hpp"
+// #include "core/BitwiseUtils.hpp"
+#include "core/ExternalTypeComponent.hpp"
+#include "graphics/sfml/SfmlIliadeGraphics.hpp"
+#include "graphics/sfml/SfmlSpriteRessource.hpp"
+#include "graphics/SpriteAsset.hpp"
+
+#include <SFML/Graphics.hpp>
+
+#include <inputs/ReceivedInputManager.hpp>
+#include <inputs/SfmlLocalInputManager.hpp>
+
+#include "test.hpp"
+#include "platformtest.hpp"
+
+int main()
+{
+	
+	Iliade::IliadeEngine engine{};
+	
+	Iliade::Graphics::Sfml::SfmlIliadeGraphics graphicEngine(engine);
+    engine.setGraphicEngine(graphicEngine);
+
+    engine.logIliadeStartUpInfo();
+    engine.log(graphicEngine.getVersion());
+
+    graphicEngine.loadTexture("../rsc/mario.png");
+    graphicEngine.loadTexture("../rsc/star.png");
+    graphicEngine.loadTexture("../rsc/platform1.png");
+    engine.log(graphicEngine.getLoadedTextureList());
+
+
+
+	Iliade::GameScene main_scene(engine, 0, -9.8);
+    
+    Character c1(main_scene,graphicEngine);
+    platformtest p1(main_scene, graphicEngine);
+    p1.setPosition(5, -15);
+    // c1.getSpriteRef().chooseAnimation(1);
+    c1.getSpriteRef().localStartAnimation(1, 20, false);
+
+    // asset1.localStartAnimation(0, 1, false);
+
+    Iliade::Inputs::Sfml::SfmlLocalInputManager manager(graphicEngine.getWindow());
+    Iliade::Inputs::ReceivedInputManager serverManager;
+
+
+    auto start = std::chrono::high_resolution_clock::now();
+    auto elapsed_ms = std::chrono::milliseconds::zero();
+    auto end = std::chrono::high_resolution_clock::now();
+
+    sf::Event event;
+    auto &windowRef = graphicEngine.getWindow();
+    bool quit = false;
+
+    c1.setPosition(2, -2);
+    
+
+    while(manager.getWindowOpenedState())
+    {
+        start = std::chrono::high_resolution_clock::now();
+
+        manager.schedule();
+        std::vector<uint32_t> inputData = manager.getInputData();
+        serverManager.parseInputData(inputData);
+
+        auto eventList = serverManager.getEvents();
+
+        
+        c1.interact(serverManager, 20);
+
+        main_scene.update(20);
+
+        auto scene_model = main_scene.copyToModel();
+        // c1.setPosition(0, 0);
+        // c1.setAnimSpeed(0);
+        // c1.stop();
+        main_scene.updateFromData(scene_model.serialise());
+        engine.show(main_scene);
+
+        // auto model = main_scene.copyToModel();
+
+        // engine.send(model)
+
+        // engine.debugLogVar("c1.x=", c1.getPositionX());
+        // engine.debugLogVar("c1.y=", c1.getPositionY());
+        // engine.debugLogVar("c1.off_x=", c1.getOffsetX());
+        // engine.debugLogVar("c1.off_y=", c1.getOffsetY());
+
+
+        end = std::chrono::high_resolution_clock::now();
+        elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
+        engine.sleep(std::chrono::milliseconds(20) - elapsed_ms);
+        
+    }
+
+
+	return 0;
+}

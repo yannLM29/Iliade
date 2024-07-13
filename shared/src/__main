@@ -1,0 +1,119 @@
+#include <iostream>
+#include <iomanip>
+#include <cstring>
+
+#include "core/IliadeEngine.hpp"
+#include "core/GameComponent.hpp"
+#include "core/GameScene.hpp"
+#include "core/GameAsset.hpp"
+// #include "core/BitwiseUtils.hpp"
+#include "test.hpp"
+#include "core/ExternalTypeComponent.hpp"
+#include "core/PlayableComponent.hpp"
+
+int main()
+{
+	
+
+	//     asset1.setPosition(27, 25);
+	// asset1.setRotation(36);
+    // asset1.setScale(2);
+    // asset1.setAnimSpeed(12);
+	// engine.debugLogVar("x=", asset1.getPositionX());
+	// engine.debugLogVar("y=", asset1.getPositionY());
+	// engine.debugLogVar("rot=", asset1.getRotation());
+    // engine.debugLogVar("speed=", asset1.getAnimSpeed());
+
+    // Iliade::GameSceneModel model = main_scene.copyToModel();
+	// auto data = model.serialise();
+
+    // asset1.setPosition(0, 0);
+	// asset1.setRotation(0);
+    // asset1.setAnimSpeed(0);
+	// engine.debugLogVar("x=", asset1.getPositionX());
+	// engine.debugLogVar("y=", asset1.getPositionY());
+	// engine.debugLogVar("rot=", asset1.getRotation());
+    // engine.debugLogVar("speed=", asset1.getAnimSpeed());
+    
+    // main_scene.updateFromData(data);
+
+    // engine.debugLogVar("x=", asset1.getPositionX());
+	// engine.debugLogVar("y=", asset1.getPositionY());
+	// engine.debugLogVar("rot=", asset1.getRotation());
+    // engine.debugLogVar("speed=", asset1.getAnimSpeed());
+
+    // std::vector<uint8_t> v;
+    // Iliade::addValueToByteVector(27, v);
+    // Iliade::addValueToByteVector(25, v);
+    // Iliade::addValueToByteVector(36.0f, v);
+    // Iliade::addValueToByteVector(12.0f, v);
+
+
+
+	Iliade::IliadeEngine engine{};
+	engine.logIliadeStartUpInfo();
+	
+	Iliade::GameScene main_scene(engine);
+	
+	Iliade::PlayableComponent player(main_scene);
+	Iliade::GameAsset asset1(&player);
+	Iliade::GameComponent freeComp1(main_scene);
+	// freeComp1.setStatic(true);
+	Iliade::GameComponent freeComp3(&freeComp1);
+	Iliade::GameComponent freeComp5(&freeComp3);
+
+	Iliade::ExternalTypeComponent ttee(58, &player);
+	ttee.setPosition(32,32);
+
+	
+	engine.debugLogVar("player=", player.getId());
+	engine.debugLogVar("asset1=", asset1.getId());
+	engine.debugLogVar("freeComp1=", freeComp1.getId());
+	engine.debugLogVar("freeComp3=", freeComp3.getId());
+	engine.debugLogVar("freeComp5=", freeComp5.getId());
+	engine.warningLog("testtttt");
+
+	// main_scene.updateFromData(scene_data);
+
+
+	freeComp5.setPosition(27, 25);
+	freeComp5.setRotation(36);
+	engine.debugLogVar("x=", freeComp5.getPositionX());
+	engine.debugLogVar("y=", freeComp5.getPositionY());
+	engine.debugLogVar("rot=", freeComp5.getRotation());
+
+	Iliade::GameSceneModel model = main_scene.copyToModel();
+	auto data = model.serialise();
+
+	for(int d = 0; d < data.size(); d++)
+	{
+		if(d % 4 == 0)
+		{
+			std::cout << std::endl;
+		}
+		std::cout << "0x" << std::setfill('0') << std::setw(2) << std::right << std::hex << int(data[d]) << " ";	
+	}
+	std::cout << std::endl;
+
+	// freeComp5.setPosition(0, 0);
+	// engine.debugLogVar("x=", freeComp5.getPositionX());
+	// engine.debugLogVar("y=", freeComp5.getPositionY());
+
+	freeComp5.setPosition(0,0);
+	freeComp5.setRotation(0);
+	engine.debugLogVar("here= ", freeComp5.getPositionX());
+	engine.debugLogVar("here= ", freeComp5.getPositionY());
+	engine.debugLogVar("rot=", freeComp5.getRotation());
+
+	main_scene.updateFromData(data);
+
+	engine.debugLogVar("here= ", freeComp5.getPositionX());
+	engine.debugLogVar("here= ", freeComp5.getPositionY());
+	engine.debugLogVar("rot=", freeComp5.getRotation());
+	// engine.debugLogVar("x=", freeComp5.getPositionX());
+	// engine.debugLogVar("y=", freeComp5.getPositionY());
+
+
+
+	return 0;
+}
