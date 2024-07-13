@@ -9,7 +9,15 @@ namespace Iliade::Connect
     {
         
     }
-
+    
+    void ServerEventManager::sendEvent(std::unique_ptr<Event> event, int targetId) 
+    {
+        for(auto &client : mServerRef.getClientList())
+        {
+            client->sendEvent(std::move(event));
+        }
+    }
+    
     void ServerEventManager::treatAnimStart(std::unique_ptr<Event> event) {}
 
     void ServerEventManager::treatAnimSpeed(std::unique_ptr<Event> event) {}

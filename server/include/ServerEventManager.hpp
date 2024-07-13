@@ -23,11 +23,16 @@ namespace Iliade::Connect
     public:
         ServerEventManager(Server &serverRef);
 
-        void treatAnimStart(std::unique_ptr<Event> event);
-        void treatAnimSpeed(std::unique_ptr<Event> event);
-        void treatAnimStop(std::unique_ptr<Event> event);
-        void treatChatMessage(std::unique_ptr<Event> event);
+        // Send
+        void sendEvent(std::unique_ptr<Event> event, int targetId = 0) override;
 
+        // Recv
+        void treatAnimStart(std::unique_ptr<Event> event) override;
+        void treatAnimSpeed(std::unique_ptr<Event> event) override;
+        void treatAnimStop(std::unique_ptr<Event> event) override;
+        void treatChatMessage(std::unique_ptr<Event> event) override;
+
+        
         
     };
 

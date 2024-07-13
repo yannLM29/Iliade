@@ -22,11 +22,13 @@
 
 #include "graphics/IliadeGraphics.hpp"
 
+#include "connect/Events/UnknownEventManager.hpp"
+
 namespace Iliade
 {
     IliadeEngine::IliadeEngine() : mLastComponentId(0)
     {
-
+        mEventManager = Connect::CreateEventManager();
     }
 
     IliadeEngine::~IliadeEngine()

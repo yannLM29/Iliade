@@ -42,6 +42,8 @@ namespace Iliade::Connect
             }
         }
 
+        virtual void sendEvent(std::unique_ptr<Event> event, int targetId = 0) = 0;
+
         virtual void treatAnimStart(std::unique_ptr<Event> event) = 0;
         virtual void treatAnimSpeed(std::unique_ptr<Event> event) = 0;
         virtual void treatAnimStop(std::unique_ptr<Event> event) = 0;

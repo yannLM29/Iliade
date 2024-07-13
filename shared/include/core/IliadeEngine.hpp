@@ -26,6 +26,11 @@ namespace Iliade::Graphics
     class IliadeGraphics;
 } // namespace Iliade::Graphics
 
+namespace Iliade::Connect
+{
+    class EventManager;
+}
+
 namespace Iliade
 {
     class GameComponent;
@@ -40,6 +45,7 @@ namespace Iliade
     private:
 
         Graphics::IliadeGraphics *mGraphicEngine;
+        std::unique_ptr<Connect::EventManager> mEventManager;
 
         int mLastSceneId;
         int mLastComponentId;
@@ -51,7 +57,7 @@ namespace Iliade
          * @brief Create Iliade Engine, Must be instanciate only one time
          * 
          */
-        IliadeEngine(/* args */);
+        IliadeEngine();
 
         /**
          * @brief Destroy the Iliade Engine object
