@@ -13,6 +13,7 @@
 #include <array>
 #include <tuple>
 #include <functional>
+#include <iostream>
 
 #include "connect/Events/Event.hpp"
 

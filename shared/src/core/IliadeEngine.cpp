@@ -21,19 +21,24 @@
 #include "core/GameScene.hpp"
 
 #include "graphics/IliadeGraphics.hpp"
-
-#include "connect/Events/UnknownEventManager.hpp"
+#include "connect/Events/EventManager.hpp"
+#include "connect/Events/Event.hpp"
 
 namespace Iliade
 {
     IliadeEngine::IliadeEngine() : mLastComponentId(0)
     {
-        mEventManager = Connect::CreateEventManager();
     }
 
     IliadeEngine::~IliadeEngine()
     {
 
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SET ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    void IliadeEngine::setEventManager(std::unique_ptr<Iliade::Connect::EventManager> eventManager)
+    {
+        mEventManager = std::move(eventManager);
     }
 
     bool IliadeEngine::addScene(GameScene *scene)
@@ -75,7 +80,20 @@ namespace Iliade
         mGraphicEngine->renderWindow();
     }
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CONNECT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    void IliadeEngine::sendEvent(std::unique_ptr<Connect::Event> event, int targetId)
+    {
+        if(mEventManager != nullptr)
+        {
+            mEventManager->sendEvent(std::move(event), targetId);
+        }
+    }
 
+    void IliadeEngine::treatEvent(std::unique_ptr<Connect::Event> event)
+    {
+        mEventManager->treatEvent(std::move(event));
+    }
+    
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LOG SYSTEM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     void IliadeEngine::log(std::string text)
     {

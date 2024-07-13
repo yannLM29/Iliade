@@ -96,11 +96,9 @@ namespace Iliade::Connect
 
             SOCKADDR_IN remoteAddr;
             socklen_t remoteAddrLength = sizeof(remoteAddr);
-            std::cout << "wait udp message...\n";
+
             int n = recvfrom(mUdpSocket, data.data(), size, 0, (SOCKADDR *)&remoteAddr, &remoteAddrLength);
 
-            std::cout << "Received message !\n";
-            std::cout << "size= " << n << "\n";
             if(n <= 0)
             {
                 std::cout << "error ";

@@ -28,6 +28,7 @@ int main()
     Iliade::GameScene main_scene(engine);
     Iliade::Graphics::Sfml::SfmlIliadeGraphics graphicEngine(engine);
     engine.setGraphicEngine(graphicEngine);
+    engine.setEventManager(std::make_unique<Iliade::Connect::ServerEventManager>(server));
     
     engine.logIliadeStartUpInfo();
 
@@ -90,7 +91,7 @@ int main()
         }
 
         engine.show(main_scene);
-        std::this_thread::sleep_for(std::chrono::milliseconds(15));
+        engine.sleep(15);
     }
 
     std::cout << "end\n";

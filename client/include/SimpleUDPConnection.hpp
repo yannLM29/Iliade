@@ -73,7 +73,6 @@ namespace Iliade::Connect
         int syncSend(const std::vector<uint8_t> &data, errors& outError)
         {
             int n = sendto(mSocket, data.data(), data.size(), 0, (SOCKADDR*)&mServerAddr, sizeof(mServerAddr));
-            std::cout << "UDP: sended " << n << " bytes\n";
             return n;
         }
         
@@ -151,7 +150,6 @@ namespace Iliade::Connect
             socklen_t addrInLen = sizeof(addrIn);
             memset(&addrIn, 0, sizeof(addrIn));
 
-            std::cout << "wait recv from " << "\n";
             wait_recv: int n = recvfrom(mSocket, dataIn.data(), (size_t)size, 0, (SOCKADDR*)&addrIn, &addrInLen);
 
             if(n == 0)
@@ -178,7 +176,6 @@ namespace Iliade::Connect
                 goto wait_recv;
             }
 
-            std::cout << "UDP: data received "<< n << "bytes\n";
             dataIn.resize(n);
 
             mReceivedMessageMutex.lock();

@@ -27,7 +27,10 @@ namespace Iliade::Connect
 
         }
 
-        
+        void sendEvent(std::unique_ptr<Event> event, int targetId = 0)
+        {
+            
+        }
 
         void treatAnimStart(std::unique_ptr<Event> event)
         {
