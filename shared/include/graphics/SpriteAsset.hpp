@@ -18,6 +18,7 @@
 #include "graphics/SpriteLayer.hpp"
 #include "graphics/IliadeGraphics.hpp"
 #include "core/GameScene.hpp"
+#include "connect/Events/AnimationEvents.hpp"
 
 namespace Iliade::Graphics
 {
@@ -198,10 +199,7 @@ namespace Iliade::Graphics
          * @brief Server side start of animation, send animation event to the clients
          * 
          */
-        void startAnimation()
-        {
-            // broadcast(?) event
-        }
+        void startAnimation(int animationIndex, float speed, bool isOneShot = false, bool cutLast = true);
 
 
 

@@ -62,6 +62,16 @@ namespace Iliade::Connect
             return true;
         }
 
+        bool sendEvent(std::unique_ptr<Event> event)
+        {
+            auto dataToSend = event->serialise();
+            mTcpPlug.asyncSend(dataToSend, [&](int n, Iliade::Connect::errors err){
+                std::cout << "Event sended\n";
+            });
+
+            return true;
+        }
+
         std::unique_ptr<Event> popEvent()
         {
             std::lock_guard<std::mutex> lock(mEventsInMutex);

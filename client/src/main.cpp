@@ -30,6 +30,7 @@ int main()
     Iliade::GameScene main_scene(engine);
     Iliade::Graphics::Sfml::SfmlIliadeGraphics graphicEngine(engine);
     engine.setGraphicEngine(graphicEngine);
+    engine.setEventManager(std::make_unique<Iliade::Connect::ClientEventManager>(&main_scene));
     
     engine.logIliadeStartUpInfo();
 
@@ -45,7 +46,6 @@ int main()
     c1.getSpriteRef().chooseAnimation(1);
     
     Iliade::Inputs::Sfml::SfmlLocalInputManager manager(graphicEngine.getWindow());
-    Iliade::Connect::ClientEventManager eventManager(&main_scene);
 
     while (manager.getWindowOpenedState())
     {
@@ -53,7 +53,7 @@ int main()
 
         while(auto new_event = server.popEvent())
         {
-            eventManager.treatEvent(std::move(new_event));
+            engine.treatEvent(std::move(new_event));
         }
 
         Iliade::Connect::errors error;

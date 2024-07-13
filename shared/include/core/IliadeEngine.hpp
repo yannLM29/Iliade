@@ -26,6 +26,12 @@ namespace Iliade::Graphics
     class IliadeGraphics;
 } // namespace Iliade::Graphics
 
+namespace Iliade::Connect
+{
+    class EventManager;
+    class Event;
+}
+
 namespace Iliade
 {
     class GameComponent;
@@ -40,6 +46,7 @@ namespace Iliade
     private:
 
         Graphics::IliadeGraphics *mGraphicEngine;
+        std::unique_ptr<Connect::EventManager> mEventManager;
 
         int mLastSceneId;
         int mLastComponentId;
@@ -51,7 +58,7 @@ namespace Iliade
          * @brief Create Iliade Engine, Must be instanciate only one time
          * 
          */
-        IliadeEngine(/* args */);
+        IliadeEngine();
 
         /**
          * @brief Destroy the Iliade Engine object
@@ -121,10 +128,12 @@ namespace Iliade
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SET ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        void setGraphicEngine(Iliade::Graphics::IliadeGraphics &graphicEngine)
+        inline void setGraphicEngine(Iliade::Graphics::IliadeGraphics &graphicEngine)
         {
             mGraphicEngine = &graphicEngine;
         }
+
+        void setEventManager(std::unique_ptr<Iliade::Connect::EventManager> eventManager);
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ID GENERATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -175,6 +184,10 @@ namespace Iliade
          */
         void show(GameScene &scene);
 
+        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CONNECT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        
+        void sendEvent(std::unique_ptr<Connect::Event> event, int targetId = 0);
+        void treatEvent(std::unique_ptr<Connect::Event> event);
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LOG SYSTEM ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         void log(std::string text);
@@ -208,7 +221,7 @@ namespace Iliade
          * 
          * @param time in milliseconds
          */
-        void sleep(std::chrono::milliseconds time)
+        void sleep(int time)
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(time));
         }

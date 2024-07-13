@@ -115,6 +115,7 @@ public:
         if(isWalking != kLeft)
         {
             mSprite.localStartAnimation(2, 15);
+            mSprite.startAnimation(2, 15);
             isWalking = kLeft;
             mSprite.setAnimSpeed(3);
         }
@@ -132,6 +133,7 @@ public:
         if(isWalking != kRight)
         {
             mSprite.localStartAnimation(1, 15);
+            mSprite.startAnimation(1, 15);
             isWalking = kRight;
             mSprite.setAnimSpeed(3);
         }

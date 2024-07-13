@@ -13,6 +13,7 @@
 #include <array>
 #include <tuple>
 #include <functional>
+#include <iostream>
 
 #include "connect/Events/Event.hpp"
 
@@ -41,6 +42,8 @@ namespace Iliade::Connect
                 }
             }
         }
+
+        virtual void sendEvent(std::unique_ptr<Event> event, int targetId = 0) = 0;
 
         virtual void treatAnimStart(std::unique_ptr<Event> event) = 0;
         virtual void treatAnimSpeed(std::unique_ptr<Event> event) = 0;
