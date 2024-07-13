@@ -1,7 +1,7 @@
 /client/build
 /server/build
 /server/rsc
-/server/rsc
+/client/rsc
 /tests
 /doc
 /.vscode
