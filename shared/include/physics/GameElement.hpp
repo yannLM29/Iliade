@@ -40,6 +40,11 @@ namespace Iliade::Physics
             return mBody;
         }
 
+        int getType() override
+        {
+            return eComponentType::kGameElement;
+        }
+
         void update(int deltaT) override;
 
         void addFixture(Iliade::Physics::GameFixture newFixture);

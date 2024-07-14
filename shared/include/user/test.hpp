@@ -152,6 +152,7 @@ public:
         if(isWalking != kDown)
         {
             mSprite.localStartAnimation(3, 15);
+            mSprite.startAnimation(3, 15);
             isWalking = kDown;
             mSprite.setAnimSpeed(3);
         }
@@ -168,6 +169,7 @@ public:
         if(isWalking != kUp)
         {
             mSprite.localStartAnimation(4, 15);
+            mSprite.startAnimation(4, 15);
             isWalking = kUp;
             mSprite.setAnimSpeed(3);
         }
@@ -183,6 +185,7 @@ public:
     {   
         getBodyRef()->SetLinearVelocity(b2Vec2(0, getBodyRef()->GetLinearVelocity().y));
         mSprite.localStopAnimation();
+        mSprite.stopAnimation(false);
         if(isWalking == kRight)
         {
             mSprite.chooseAnimation(5);

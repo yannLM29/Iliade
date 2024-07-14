@@ -110,10 +110,11 @@ namespace Iliade
      */
     std::string GameScene::getComponentListDescription()
     {
-        std::string st = "";
-        // parcourComponents([&](Iliade::GameComponent* c){
-        //     st += " - " + c->getId();
-        // });
+        std::string st = "Scene:\n";
+        for(auto &comp : mComponents)
+        {
+            comp->getComponentBranchDescription(0, st);
+        }
 
         return st;
     }

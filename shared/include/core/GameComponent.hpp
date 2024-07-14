@@ -18,6 +18,7 @@
 #include <stdexcept>
 #include <cinttypes>
 
+#include "core/ComponentTypeIds.hpp"
 #include "core/GameComponentModel.hpp"
 #include "core/AttachedStdTypes.hpp"
 #include "utils/BitManips.hpp"
@@ -85,7 +86,7 @@ namespace Iliade
          */
         virtual int getType()
         {
-            return UNIQUE_COMPONENT_TYPE_ID;
+            return eComponentType::kGameComponent;
         }
         
         /**
@@ -182,6 +183,19 @@ namespace Iliade
         inline IliadeEngine& getEngineRef() const noexcept
         {
             return mEngineRef;
+        }
+
+        void getComponentBranchDescription(int n, std::string &out)
+        {
+            for(int i = 0; i < n; i++)
+            {
+                out += " ";
+            }
+            out += "| " + std::to_string(getId()) + ": type=" + std::to_string(getType()) + " x=" + std::to_string(getPositionX()) + " y=" + std::to_string(getPositionY()) + "\n";
+            for(auto &child : mChildComponents)
+            {
+                child->getComponentBranchDescription(n+1, out);
+            }
         }
 
         /**

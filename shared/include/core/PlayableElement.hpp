@@ -31,7 +31,7 @@ namespace Iliade
 
         int getType() override
         {
-            return UNIQUE_COMPONENT_TYPE_ID;
+            return eComponentType::kPlayableElement;
         }
 
         template<typename lambda>

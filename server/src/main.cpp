@@ -48,6 +48,8 @@ int main()
 
     Iliade::Inputs::Sfml::SfmlLocalInputManager manager(graphicEngine.getWindow());
 
+    std::cout << main_scene.getComponentListDescription() << "\n";
+    
     while (manager.getWindowOpenedState())
     {
         manager.schedule();

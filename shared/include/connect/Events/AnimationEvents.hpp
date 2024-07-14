@@ -144,7 +144,7 @@ namespace Iliade::Connect::Events
         {
             if(dataIn.size() < getSize())
             {
-                throw std::runtime_error("dataIn is too short");
+                throw std::runtime_error("dataIn (" + std::to_string(dataIn.size()) + " bytes) is too short, should be " + std::to_string(getSize()));
             }
 
             mId = readInt32ValueFromByteVector(dataIn.cbegin() + 0);

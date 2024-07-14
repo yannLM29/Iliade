@@ -109,7 +109,6 @@ namespace Iliade::Connect
             data.resize(n);
 
             auto clientToRecv = std::find_if(mClients.begin(), mClients.end(), [&](std::unique_ptr<ClientPlug> &client) {
-                std::cout << client->getUdpPlug().getConnectedPort() << "  " << remoteAddr.sin_port << "\n";
                 return client->getConnectedIpAddrRaw() == remoteAddr.sin_addr.s_addr && client->getUdpPlug().getConnectedPort() == remoteAddr.sin_port;
             });
 
@@ -126,7 +125,6 @@ namespace Iliade::Connect
         int n = sendto(mUdpSocket, data.data(), data.size(), 0, (SOCKADDR *)&clientAddrToSend, sizeof(clientAddrToSend));
         mUdpSendMutex.unlock();
 
-        std::cout << "sended UDP message of " << n <<" bytes to " << ntohs(clientAddrToSend.sin_port) << " / " << clientAddrToSend.sin_port << "\n";
         return n;
     }
 

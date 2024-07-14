@@ -64,6 +64,11 @@ namespace Iliade::Graphics
         {
             return mAnimSpeed;
         }
+
+        int getType() override
+        {
+            return eComponentType::kSpriteAsset;
+        }
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SET ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         inline void addLayer(SpriteLayer layer)
         {
@@ -197,11 +202,13 @@ namespace Iliade::Graphics
 
         /**
          * @brief Server side start of animation, send animation event to the clients
-         * 
          */
         void startAnimation(int animationIndex, float speed, bool isOneShot = false, bool cutLast = true);
 
-
+        /**
+         * @brief Server side stop of animation, send animation event to the clients
+         */
+        void stopAnimation(bool cutLast);
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Update ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
