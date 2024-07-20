@@ -142,7 +142,7 @@ namespace Iliade::Connect::Events
 
         StopAnimEvent(const std::vector<uint8_t> &dataIn) : Event(kStopAnim, 5)
         {
-            if(dataIn.size() < getSize())
+            if(dataIn.size() < getSize() - 6)
             {
                 throw std::runtime_error("dataIn (" + std::to_string(dataIn.size()) + " bytes) is too short, should be " + std::to_string(getSize()));
             }

@@ -41,8 +41,10 @@ int main()
 
     Character c1(main_scene,graphicEngine);
     platformtest p1(main_scene, graphicEngine);
+    platformtest p2(main_scene, graphicEngine);
     c1.setPosition(2,0);
     p1.setPosition(5, -15);
+    p2.setPosition(18, -18);
     c1.getSpriteRef().chooseAnimation(1);
     
     Iliade::Inputs::Sfml::SfmlLocalInputManager manager(graphicEngine.getWindow());

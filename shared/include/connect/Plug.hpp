@@ -144,12 +144,14 @@ namespace Iliade::Connect
             mWaitedEventType = static_cast<eEventTypes>(readInt16ValueFromByteVector(dataIn.begin()));
             mWaitedEventSize = readUInt32ValueFromByteVector(dataIn.begin() + 2);
 
+            std::cout << "received event of type " << mWaitedEventType << " and size " << mWaitedEventSize << "\n";
+
             mTcpPlug.asyncRecv(mWaitedEventSize, [this](const std::vector<uint8_t>& data, errors error) { this->parseEventBody(data, error); }); 
         }
 
         void parseEventBody(const std::vector<uint8_t>&dataIn, errors error)
         {
-            if(dataIn.size() < 6)
+            if(dataIn.size() + 6 < mWaitedEventSize)
             {
                 
                 if(dataIn.size() == 0)
@@ -160,7 +162,7 @@ namespace Iliade::Connect
                 }
                 else
                 {
-                    mEngineRef.errorLog("dataIn too short in parseEventBody");
+                    mEngineRef.errorLog("dataIn too short in parseEventBody: " + std::to_string(dataIn.size()) + " instead of " + std::to_string(mWaitedEventSize));
                 }
 
                 waitForEvent();
