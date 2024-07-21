@@ -35,14 +35,48 @@ int main()
     engine.logIliadeStartUpInfo();
 
     graphicEngine.loadTexture("../rsc/mario.png");
+    graphicEngine.loadTexture("../rsc/luigi.png");
     graphicEngine.loadTexture("../rsc/star.png");
     graphicEngine.loadTexture("../rsc/platform1.png");
     engine.log(graphicEngine.getLoadedTextureList());
 
     Character c1(main_scene,graphicEngine);
+    Character c2(main_scene, graphicEngine, "../rsc/luigi.png", 
+    {
+        {7, 2, 20, 43},
+        {43, 2, 17, 43},
+        {78, 2, 18, 43},
+        {113, 2, 17, 43},
+        {147, 2, 20, 43},
+        {184, 2, 17, 43},
+        {218, 2, 18, 43},
+        {254, 2, 17, 43}
+    },
+    {
+        {7, 252, 19, 43},
+        {42, 252, 21, 43},
+        {77, 252, 22, 43},
+        {112, 252, 22, 43},
+        {147, 252, 20, 43},
+        {182, 252, 22, 43},
+        {217, 252, 23, 43},
+        {252, 252, 22, 43}
+    },
+    {
+        {6, 452, 21, 43},
+        {41, 452, 21, 43},
+        {75, 452, 21, 43},
+        {111, 452, 21, 43},
+        {146, 452, 20, 43},
+        {180, 452, 22, 43},
+        {214, 452, 23, 43},
+        {250, 452, 22, 43}
+    });
+
     platformtest p1(main_scene, graphicEngine);
     platformtest p2(main_scene, graphicEngine);
     c1.setPosition(2,0);
+    c2.setPosition(16,2);
     p1.setPosition(5, -15);
     p2.setPosition(18, -18);
     c1.getSpriteRef().chooseAnimation(1);

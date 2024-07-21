@@ -13,7 +13,15 @@ public:
 
     Iliade::PlayableElement* onConnectPlayerAssignment()
     {
-        return main_character;
+        static int cpt = 0;
+
+        if(cpt == 0)
+        {
+            cpt++;
+            return main_character;
+        }
+        cpt++;
+        return second_character;
     }
 
 };

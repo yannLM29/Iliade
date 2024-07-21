@@ -30,34 +30,43 @@ private:
     Star mStar;
 
 public:
-    Character(Iliade::GameScene &scene, Iliade::Graphics::Sfml::SfmlIliadeGraphics &graphref) : Iliade::PlayableElement(scene), mSprite(this), mStar(this, graphref)
+    Character(Iliade::GameScene &scene, Iliade::Graphics::Sfml::SfmlIliadeGraphics &graphref,
+    std::string texturePath = "../rsc/mario.png",
+    std::vector<Iliade::Graphics::Frame> animTurn = {{4,   2, 22, 37},
+                                                     {46,  2, 22, 37},
+                                                     {88,  2, 22, 37},
+                                                     {130, 2, 22, 37},
+                                                     {172, 2, 22, 37},
+                                                     {214, 2, 22, 37},
+                                                     {255, 2, 22, 37},
+                                                     {298, 2, 22, 37}},
+    std::vector<Iliade::Graphics::Frame> animWalkRight = {{4,   240, 22, 37},
+                                                          {46,  240, 22, 37},
+                                                          {88,  241, 27, 37},
+                                                          {130, 240, 22, 37},
+                                                          {172, 240, 22, 37},
+                                                          {214, 240, 22, 37},
+                                                          {255, 240, 27, 37},
+                                                          {298, 240, 22, 37}},
+    std::vector<Iliade::Graphics::Frame> animWalkLeft = {{2,   404, 22, 37},
+                                                         {44,  404, 22, 37},
+                                                         {86,  404, 22, 37},
+                                                         {128, 404, 22, 37},
+                                                         {170, 404, 22, 37},
+                                                         {212, 404, 22, 37},
+                                                         {253, 404, 22, 37},
+                                                         {296, 404, 22, 37}}
+ 
+ ) : Iliade::PlayableElement(scene), mSprite(this), mStar(this, graphref)
     {
-        Iliade::Graphics::Animation anim_turn({{4,   2, 22, 37},
-                                               {46,  2, 22, 37},
-                                               {88,  2, 22, 37},
-                                               {130, 2, 22, 37},
-                                               {172, 2, 22, 37},
-                                               {214, 2, 22, 37},
-                                               {255, 2, 22, 37},
-                                               {298, 2, 22, 37}});
+        Iliade::Graphics::Animation anim_turn;
+        anim_turn.frames = animTurn;
 
-        Iliade::Graphics::Animation anim_walk_right({{4,   240, 22, 37},
-                                                     {46,  240, 22, 37},
-                                                     {88,  241, 27, 37},
-                                                     {130, 240, 22, 37},
-                                                     {172, 240, 22, 37},
-                                                     {214, 240, 22, 37},
-                                                     {255, 240, 27, 37},
-                                                     {298, 240, 22, 37}});
+        Iliade::Graphics::Animation anim_walk_right;
+        anim_walk_right.frames = animWalkRight;
 
-        Iliade::Graphics::Animation anim_walk_left({{2,   404, 22, 37},
-                                                    {44,  404, 22, 37},
-                                                    {86,  404, 22, 37},
-                                                    {128, 404, 22, 37},
-                                                    {170, 404, 22, 37},
-                                                    {212, 404, 22, 37},
-                                                    {253, 404, 22, 37},
-                                                    {296, 404, 22, 37}});
+        Iliade::Graphics::Animation anim_walk_left;
+        anim_walk_left.frames = animWalkLeft;
         
 
         Iliade::Graphics::Animation anim_walk_down({{1, 322, 28, 37},
@@ -83,9 +92,18 @@ public:
         Iliade::Graphics::Animation stopedDown({{172, 2, 22, 37}});
         Iliade::Graphics::Animation stopedUp({{4,   2, 22, 37}});
         
+        std::vector<Iliade::Graphics::Animation> animations;
+        animations.emplace_back(animTurn);
+        animations.emplace_back(anim_walk_right);
+        animations.emplace_back(anim_walk_left);
+        animations.emplace_back(anim_walk_down);
+        animations.emplace_back(anim_walk_up);
+        animations.emplace_back(stopedRight);
+        animations.emplace_back(stopedLeft);
+        animations.emplace_back(stopedDown);
+        animations.emplace_back(stopedUp);
 
-
-        Iliade::Graphics::SpriteLayer layer0(std::make_unique<Iliade::Graphics::Sfml::SfmlSpriteRessource>(graphref, "../rsc/mario.png"), {anim_turn, anim_walk_right, anim_walk_left, anim_walk_down, anim_walk_up, stopedRight, stopedLeft, stopedDown, stopedUp});
+        Iliade::Graphics::SpriteLayer layer0(std::make_unique<Iliade::Graphics::Sfml::SfmlSpriteRessource>(graphref, texturePath), animations);
        
         mSprite.addLayer(std::move(layer0));
         mSprite.setGroundIndex(1);

@@ -14,7 +14,7 @@ namespace Iliade::Connect
     {
         for(auto &client : mServerRef.getClientList())
         {
-            client->sendEvent(std::move(event));
+            // client->sendEvent(*(event.get()));
         }
     }
     
